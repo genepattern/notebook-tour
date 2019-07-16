@@ -82,7 +82,7 @@ define([
                         "Tutorial notebooks teach how to use different GenePattern Notebook features, including advanced programmatic features."
                 },
                 {   // STEP 4
-                    element: document.querySelectorAll('#repo-sidebar-nav [data-tag=""]')[0],
+                    element: document.querySelectorAll('[data-tag=community]')[0],
                     intro: "<h4>Community Notebooks</h4>" +
                         "Finally, community notebooks are those that have been contributed by the GenePattern Notebook community."
                 },
@@ -129,7 +129,7 @@ define([
         // Perform necessary transitions between steps
         intro.onbeforechange(function(element) {
             //switch the active tab to the appropriate one for the step
-            if (intro._currentStep === 1) $('.repository_tab_link').click();
+            if (intro._currentStep === 1) $('.repository_tab_link:first').click();
 
             // Switch to the files tab
             else if (intro._currentStep === 6) $("#tabs a:first").click();
