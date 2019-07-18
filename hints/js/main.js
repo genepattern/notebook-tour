@@ -23,13 +23,13 @@ define([
         $("body").append(
             $("<div></div>")
                 .attr("id", "gp-hint-box")
-                .attr("title", "Welcome to the GenePattern Notebook Repository")
+                .attr("title", "Welcome to the GenePattern Notebook Workspace")
                 .append(
                     $("<i class='fa fa-info' aria-hidden='true'></i>")
                 )
                 .click(function() {
                     dialog.modal({
-                        title : "Welcome to the GenePattern Notebook Repository",
+                        title : "Welcome to the GenePattern Notebook Workspace",
                         body : $("<div></div>")
                             .append(
                                 $("<iframe></iframe>")
@@ -63,13 +63,13 @@ define([
         intro.setOptions({
             steps: [
                 {   // STEP 0
-                    intro: "<h4>Welcome to the GenePattern Notebook Repository</h4>" +
+                    intro: "<h4>Welcome to the GenePattern Notebook Workspace</h4>" +
                         "GenePattern provides hundreds of analytical tools for the analysis of gene expression (RNA-seq and microarray), sequence variation and copy number, proteomic, flow cytometry, and network analysis - all with a user-friendly interface!"
                 },
                 {   // STEP 1
                     element: document.querySelectorAll('.repository_tab_link')[0],
                     intro: "<h4>Notebook Library</h4>" +
-                        "The GenePattern Notebook Repository provides a library of public notebooks, which can serve as templates or examples when creating your own. These notebooks can be accessed from the <em>Notebook Library</em> tab."
+                        "The GenePattern Notebook Workspace provides a library of public notebooks, which can serve as templates or examples when creating your own. These notebooks can be accessed from the <em>Notebook Library</em> tab."
                 },
                 {   // STEP 2
                     element: document.querySelectorAll('[data-tag=featured]')[0],
