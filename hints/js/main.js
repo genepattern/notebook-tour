@@ -23,6 +23,7 @@ define([
         $("body").append(
             $("<div></div>")
                 .attr("id", "gp-hint-box")
+                .hide()
                 .attr("title", "Welcome to the GenePattern Notebook Workspace")
                 .append(
                     $("<i class='fa fa-info' aria-hidden='true'></i>")
@@ -153,6 +154,10 @@ define([
                 xhr.setRequestHeader("Authorization", "Token " + GenePattern.repo.token);
             },
             success: function (data) {
+                // Display the hints box
+                $("#gp-hint-box").show();
+
+                // Display the webtour or not
                 if (!data['seen']) webtour();
                 else console.log("Webtour already seen");
             },
