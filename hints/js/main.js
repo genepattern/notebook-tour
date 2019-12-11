@@ -57,7 +57,71 @@ define([
      * Begin webtour functionality     *
      ***********************************/
     function webtour() {
-        // Get a refernece to the intro.js instance
+        // Start the correct webtour for the page
+        if (Jupyter.notebook) notebook_webtour();
+        else if (Jupyter.notebook_list) tree_webtour();
+        else console.log('No webtour for this page');
+    }
+
+    function notebook_webtour() {
+        const build_webtour = function() {
+            // Get a reference to the intro.js instance
+            const intro = introJs();
+
+            // Define each of the steps of the tour
+            intro.setOptions({
+                steps: [
+                    {   // STEP 0
+                        intro: "<h4>Welcome to the GenePattern Notebook Workspace</h4>" +
+                        "GenePattern provides hundreds of analytical tools for the analysis of gene expression (RNA-seq and microarray), sequence variation and copy number, proteomic, flow cytometry, and network analysis - all with a user-friendly interface!"
+                    },
+                    {   // STEP 1
+                        element: document.querySelectorAll('#nbtools-toolbar')[0],
+                        intro: "<h4>Notebook Tools</h4>" +
+                        "The analysis tools that GenePattern provides can be accessed by clicking on the Tools button. Many tools require that you first log in to your GenePattern account by inserting a 'GenePattern Login' cell."
+                    },
+                    {   // STEP 2
+                        element: document.querySelectorAll('#file_menu')[0],
+                        intro: "<h4>Publishing & Sharing</h4>" +
+                        "The GenePattern Notebook environment allows you to publish your notebook to the public Notebook Library or to share your notebook with select users. Once you are ready to share or publish your notebook, these features can be accessed from the File menu."
+                    },
+                    {   // STEP 3
+                        element: document.querySelectorAll('#help_menu')[0],
+                        intro: "<h4>Help Menu</h4>" +
+                        "Documentation for GenePattern, Jupyter and related libraries can be found in the Help menu."
+                    }
+                ]
+            });
+
+            // Perform necessary transitions between steps
+            intro.onbeforechange(function (element) {
+                //switch the active tab to the appropriate one for the step
+                if (intro._currentStep === 2) document.querySelector('#file_menu').style.display = 'block';
+
+                // Switch to the files tab
+                else if (intro._currentStep === 3) {
+                    document.querySelector('#file_menu').style.display = 'none';
+                    document.querySelector('#help_menu').style.display = 'block';
+                }
+            });
+
+            // Hide menus on exit
+            intro.onbeforeexit(function () {
+                document.querySelector('#file_menu').style.display = 'none';
+                document.querySelector('#help_menu').style.display = 'none';
+            });
+
+            // Launch the tour
+            intro.start()
+        };
+
+        let button_loaded = document.querySelector('#nbtools-toolbar');
+        if (button_loaded) build_webtour();
+        else setTimeout(build_webtour, 1000);
+    }
+
+    function tree_webtour() {
+        // Get a reference to the intro.js instance
         const intro = introJs();
 
         // Define each of the steps of the tour
@@ -168,7 +232,12 @@ define([
     }
 
     function load_css() {
-        const STATIC_PATH = Jupyter.notebook_list.base_url + "nbextensions/hints/css/";
+        // Obtain a reference to the Jupyter Notebook object
+        let notebook = Jupyter.notebook_list;
+        if (!notebook) notebook = Jupyter.notebook;
+        if (!notebook) return;
+
+        const STATIC_PATH = notebook.base_url + "nbextensions/hints/css/";
 
         $('head')
             .append(
