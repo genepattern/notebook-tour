@@ -83,7 +83,7 @@ define([
                     {   // STEP 2
                         element: document.querySelectorAll('#file_menu')[0],
                         intro: "<h4>Publishing & Sharing</h4>" +
-                        "The GenePattern Notebook environment allows you to publish your notebook to the public Notebook Library or to share your notebook with select users. Once you are ready to share or publish your notebook, these features can be accessed from the File menu."
+                        "The GenePattern Notebook environment allows you to publish your notebook to the public Notebook Library or to share your notebook with select users. Once you are ready to share or publish your notebook, these features can be accessed from the <strong>File</strong> menu."
                     },
                     {   // STEP 3
                         element: document.querySelectorAll('#help_menu')[0],
@@ -96,7 +96,10 @@ define([
             // Perform necessary transitions between steps
             intro.onbeforechange(function (element) {
                 //switch the active tab to the appropriate one for the step
-                if (intro._currentStep === 2) document.querySelector('#file_menu').style.display = 'block';
+                if (intro._currentStep === 2) {
+                    document.querySelector('#file_menu').style.display = 'block';
+                    document.querySelector('#help_menu').style.display = 'none';
+                }
 
                 // Switch to the files tab
                 else if (intro._currentStep === 3) {
