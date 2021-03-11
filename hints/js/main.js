@@ -155,7 +155,7 @@ define([
                         "Finally, community notebooks are those that have been contributed by the GenePattern Notebook community."
                 },
                 {   // STEP 5
-                    element: document.querySelectorAll('[data-tag="-shared-by-me"]')[0],
+                    element: document.querySelectorAll('.repo-sidebar col-md-2 h4')[1],
                     intro: "<h4>Shared Notebooks</h4>" +
                         "In addition to the public notebooks, the <em>Notebook Library</em> tab also contains those that you have shared with specific collaborators or which have been shared with you. If this option is empty, it is because you haven't shared a notebook with anyone yet.",
                     position: "right"
