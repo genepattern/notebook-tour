@@ -163,7 +163,7 @@ define([
                 {   // STEP 7
                     element: document.querySelectorAll('a[href="#notebooks"]')[0],
                     intro: "<h4>Personal Workspace</h4>" +
-                        "The <em>Files</em> tab contains your personal workspace. Listed here are notebooks or other files which are private to your account Here you can create new notebooks, upload files or organize your file into folders."
+                        "The <em>Files</em> tab contains your personal workspace. Here you can create new notebooks, upload files or organize your file into folders. When you copy (run) public notebooks from the Notebook Library they will be listed here along with all of the other notebooks, files, and folders that are private to your account."
                 },
                 {   // STEP 8
                     element: document.querySelectorAll('#notebook_list')[0],
