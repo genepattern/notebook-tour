@@ -203,7 +203,7 @@ define([
             else if (intro._currentStep === 6) $("#tabs a:first").click();
 
             // Switch back to Library tab
-            else if (intro._currentStep === 5) $('.repository_tab_link:first').click();
+            else if (intro._currentStep >= 1 && intro._currentStep <= 5) $('.repository_tab_link:first').click();
 
             // Select a notebook
             else if (intro._currentStep === 9) {
