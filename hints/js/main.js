@@ -155,7 +155,7 @@ define([
                         "Finally, community notebooks are those that have been contributed by the GenePattern Notebook community."
                 },
                 {   // STEP 5
-                    element: document.querySelectorAll('[data-tag="-shared-by-me"]')[0],
+                    element: document.querySelectorAll('.repo-sidebar h4')[1],
                     intro: "<h4>Shared Notebooks</h4>" +
                         "In addition to the public notebooks, the <em>Notebook Library</em> tab also contains those that you have shared with specific collaborators or which have been shared with you. If this option is empty, it is because you haven't shared a notebook with anyone yet.",
                     position: "right"
@@ -163,7 +163,7 @@ define([
                 {   // STEP 6
                     element: document.querySelectorAll('a[href="#notebooks"]')[0],
                     intro: "<h4>Personal Workspace</h4>" +
-                        "The <em>Files</em> tab contains your personal workspace. Listed here are notebooks or other files which are private to your account Here you can create new notebooks, upload files or organize your file into folders."
+                        "The <em>Files</em> tab contains your personal workspace. Here you can create new notebooks, upload files or organize your file into folders. When you copy (run) public notebooks from the Notebook Library they will be listed here along with all of the other notebooks, files, and folders that are private to your account."
                 },
                 {   // STEP 7
                     element: document.querySelectorAll('#notebook_list')[0],
@@ -201,6 +201,9 @@ define([
 
             // Switch to the files tab
             else if (intro._currentStep === 6) $("#tabs a:first").click();
+
+            // Switch back to Library tab
+            else if (intro._currentStep >= 1 && intro._currentStep <= 5) $('.repository_tab_link:first').click();
 
             // Select a notebook
             else if (intro._currentStep === 9) {
