@@ -134,32 +134,32 @@ define([
                     intro: "<h4>Welcome to the GenePattern Notebook Workspace</h4>" +
                         "GenePattern provides hundreds of analytical tools for the analysis of gene expression (RNA-seq and microarray), sequence variation and copy number, proteomic, flow cytometry, and network analysis - all with a user-friendly interface!"
                 },
-                {   // STEP 1
-                    element: document.querySelectorAll('.repository_tab_link')[0],
-                    intro: "<h4>Notebook Library</h4>" +
-                        "The GenePattern Notebook Workspace provides a library of public notebooks, which can serve as templates or examples when creating your own. These notebooks can be accessed from the <em>Notebook Library</em> tab."
-                },
-                {   // STEP 2
-                    element: document.querySelectorAll('[data-tag=featured]')[0],
-                    intro: "<h4>Featured Notebooks</h4>" +
-                        "Public notebooks are tagged and divided into several different categories. Featured notebooks have been selected because they demonstrate interesting biologic, bioinformatic or machine learning methods."
-                },
-                {   // STEP 3
-                    element: document.querySelectorAll('[data-tag=tutorial]')[0],
-                    intro: "<h4>Tutorial Notebooks</h4>" +
-                        "Tutorial notebooks teach how to use different GenePattern Notebook features, including advanced programmatic features."
-                },
-                {   // STEP 4
-                    element: document.querySelectorAll('[data-tag=community]')[0],
-                    intro: "<h4>Community Notebooks</h4>" +
-                        "Finally, community notebooks are those that have been contributed by the GenePattern Notebook community."
-                },
-                {   // STEP 5
-                    element: document.querySelectorAll('.repo-sidebar h4')[1],
-                    intro: "<h4>Shared Notebooks</h4>" +
-                        "In addition to the public notebooks, the <em>Notebook Library</em> tab also contains those that you have shared with specific collaborators or which have been shared with you. If this option is empty, it is because you haven't shared a notebook with anyone yet.",
-                    position: "right"
-                },
+                // {   // STEP 1
+                //     element: document.querySelectorAll('.repository_tab_link')[0],
+                //     intro: "<h4>Notebook Library</h4>" +
+                //         "The GenePattern Notebook Workspace provides a library of public notebooks, which can serve as templates or examples when creating your own. These notebooks can be accessed from the <em>Notebook Library</em> tab."
+                // },
+                // {   // STEP 2
+                //     element: document.querySelectorAll('[data-tag=featured]')[0],
+                //     intro: "<h4>Featured Notebooks</h4>" +
+                //         "Public notebooks are tagged and divided into several different categories. Featured notebooks have been selected because they demonstrate interesting biologic, bioinformatic or machine learning methods."
+                // },
+                // {   // STEP 3
+                //     element: document.querySelectorAll('[data-tag=tutorial]')[0],
+                //     intro: "<h4>Tutorial Notebooks</h4>" +
+                //         "Tutorial notebooks teach how to use different GenePattern Notebook features, including advanced programmatic features."
+                // },
+                // {   // STEP 4
+                //     element: document.querySelectorAll('[data-tag=community]')[0],
+                //     intro: "<h4>Community Notebooks</h4>" +
+                //         "Finally, community notebooks are those that have been contributed by the GenePattern Notebook community."
+                // },
+                // {   // STEP 5
+                //     element: document.querySelectorAll('.repo-sidebar h4')[1],
+                //     intro: "<h4>Shared Notebooks</h4>" +
+                //         "In addition to the public notebooks, the <em>Notebook Library</em> tab also contains those that you have shared with specific collaborators or which have been shared with you. If this option is empty, it is because you haven't shared a notebook with anyone yet.",
+                //     position: "right"
+                // },
                 {   // STEP 6
                     element: document.querySelectorAll('a[href="#notebooks"]')[0],
                     intro: "<h4>Personal Workspace</h4>" +
@@ -185,28 +185,22 @@ define([
                     element: document.querySelectorAll('.dynamic-buttons')[0],
                     intro: "<h4>Working With Files</h4>" +
                         "When a file is selected, a menu of options will display here. This menu allows you to rename, move and delete files."
-                },
-                {   // STEP 11
-                    element: document.querySelectorAll('.dynamic-buttons')[0],
-                    intro: "<h4>Sharing & Publishing</h4>" +
-                        "Finally, when you select a notebook, options will appear allowing you to <em>share</em> this notebook with others or to <em>publish</em> it as a public notebook."
-                }
+                } //,
+                // {   // STEP 11
+                //     element: document.querySelectorAll('.dynamic-buttons')[0],
+                //     intro: "<h4>Sharing & Publishing</h4>" +
+                //         "Finally, when you select a notebook, options will appear allowing you to <em>share</em> this notebook with others or to <em>publish</em> it as a public notebook."
+                // }
             ]
         });
 
         // Perform necessary transitions between steps
         intro.onbeforechange(function(element) {
-            //switch the active tab to the appropriate one for the step
-            if (intro._currentStep === 1) $('.repository_tab_link:first').click();
-
             // Switch to the files tab
-            else if (intro._currentStep === 6) $("#tabs a:first").click();
-
-            // Switch back to Library tab
-            else if (intro._currentStep >= 1 && intro._currentStep <= 5) $('.repository_tab_link:first').click();
+            if (intro._currentStep <= 3) $("#tabs a:first").click();
 
             // Select a notebook
-            else if (intro._currentStep === 9) {
+            else if (intro._currentStep === 4) {
                 $('.item_icon.notebook_icon.icon-fixed-width:first').parent().find('input[type=checkbox]').click();
             }
         });
@@ -215,26 +209,46 @@ define([
         intro.start();
     }
 
-    function check_webtour() {
-        $.ajax({
-            url: GenePattern.repo.repo_url + "/webtours/" + GenePattern.repo.username + "/",
-            method: "GET",
-            crossDomain: true,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Token " + GenePattern.repo.token);
-            },
-            success: function (data) {
-                // Display the hints box
-                $("#gp-hint-box").show();
+    function get_cookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
 
-                // Display the webtour or not
-                if (!data['seen']) webtour();
-                else console.log("Webtour already seen");
-            },
-            error: function() {
-                console.log("ERROR: Attempting to check webtour");
-            }
-        });
+    function set_cookie(name, value, days=365) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function check_webtour() {
+        // Determine the page and cookie name
+        let cookie_name = null;
+        if (Jupyter.notebook) cookie_name = "GPNBWorkspaceNotebookTour";
+        else if (Jupyter.notebook_list) cookie_name = "GPNBWorkspaceTreeTour";
+        else return;
+
+        // Get the "Have you seen the tour?" cookie
+        const webtour_cookie = get_cookie(cookie_name);
+
+        // If null, set the cookie and show the tour
+        if (!webtour_cookie) {
+            set_cookie(cookie_name, GenePattern.repo.username);
+            webtour();
+        }
+        else console.log('Webtour already seen');
+
+        // Display the hints box
+        $("#gp-hint-box").show();
     }
 
     function load_css() {
