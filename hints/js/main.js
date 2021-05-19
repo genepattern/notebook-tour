@@ -275,7 +275,7 @@ define([
         load_css();
         const on_index_page = $("#notebooks").is(":visible");
         if (on_index_page) display_hints();
-        check_webtour();
+        setTimeout(check_webtour, 500);
     }
 
     return {
