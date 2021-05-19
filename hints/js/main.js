@@ -51,6 +51,9 @@ define([
                     });
                 })
         );
+
+        // Display the hints box
+        $("#gp-hint-box").show();
     }
 
     /***********************************
@@ -246,9 +249,6 @@ define([
             webtour();
         }
         else console.log('Webtour already seen');
-
-        // Display the hints box
-        $("#gp-hint-box").show();
     }
 
     function load_css() {
@@ -275,7 +275,7 @@ define([
         load_css();
         const on_index_page = $("#notebooks").is(":visible");
         if (on_index_page) display_hints();
-        $(document).on("gp.repo.auth", check_webtour);
+        check_webtour();
     }
 
     return {
