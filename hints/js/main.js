@@ -113,8 +113,8 @@ define([
 
             // Hide menus on exit
             intro.onbeforeexit(function () {
-                document.querySelector('#file_menu').style.display = 'none';
-                document.querySelector('#help_menu').style.display = 'none';
+                document.querySelector('#file_menu').style.removeProperty('display');
+                document.querySelector('#help_menu').style.removeProperty('display');
             });
 
             // Launch the tour
